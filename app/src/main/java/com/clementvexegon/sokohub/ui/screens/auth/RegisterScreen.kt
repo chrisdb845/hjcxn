@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,13 +45,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.christiandb845.sokohub.R
 import com.christiandb845.sokohub.ui.theme.Blueberry
+import com.clementvexegon.sokohub.data.AuthViewModel
 import com.clementvexegon.sokohub.navigation.ROUT_LOGIN
 
 @Composable
 fun RegisterScreen(navcontroller: NavController){
 
     Column(
-        modifier = Modifier.fillMaxSize().paint(painter = painterResource(R.drawable.img), contentScale = ContentScale.FillBounds),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
@@ -77,7 +79,7 @@ fun RegisterScreen(navcontroller: NavController){
         var username by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
-        var cornfirmpassword by remember { mutableStateOf("") }
+        var confirmpassword by remember { mutableStateOf("") }
 
         //Username
 
@@ -138,8 +140,8 @@ fun RegisterScreen(navcontroller: NavController){
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
-            value = cornfirmpassword,
-            onValueChange = { cornfirmpassword = it },
+            value = confirmpassword,
+            onValueChange = { confirmpassword = it },
             modifier = Modifier.width(350.dp),
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
             placeholder = { Text(text = "Confirm Password") },
@@ -155,8 +157,18 @@ fun RegisterScreen(navcontroller: NavController){
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        val context = LocalContext.current
+        val authViewModel = AuthViewModel(navcontroller, context)
         Button(
-            onClick = {},
+            onClick = {
+
+                authViewModel.signup(username, email, password,confirmpassword)
+
+
+
+
+
+            },
             colors = ButtonDefaults.buttonColors(Blueberry),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.width(150.dp)
