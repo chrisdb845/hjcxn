@@ -8,3 +8,7 @@ const val ROUT_ONBOARDING = "onboarding"
 const val ROUT_SERVICE = "service"
 
 const val ROUT_INTENT = "intent"
+
+const val ROUTE_ADD_PRODUCT = "addproduct"
+const val ROUTE_VIEW_PRODUCTS = "viewproducts"
+const val ROUTE_UPDATE_PRODUCT = "update_product/{productId}"
