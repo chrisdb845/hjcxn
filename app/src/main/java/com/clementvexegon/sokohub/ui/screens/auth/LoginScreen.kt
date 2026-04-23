@@ -46,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import com.christiandb845.sokohub.R
 import com.christiandb845.sokohub.ui.theme.Blueberry
 import com.clementvexegon.sokohub.data.AuthViewModel
+import com.clementvexegon.sokohub.navigation.ROUTE_ADD_PRODUCT
 import com.clementvexegon.sokohub.navigation.ROUT_HOME
 import com.clementvexegon.sokohub.navigation.ROUT_REGISTER
 

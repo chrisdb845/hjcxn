@@ -1,9 +1,4 @@
 package com.clementvexegon.sokohub.data
-
-import com.clementvexegon.sokohub.models.Product
-import com.clementvexegon.sokohub.navigation.ROUTE_VIEW_PRODUCTS
-import kotlin.jvm.java
-
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
@@ -11,6 +6,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.clementvexegon.sokohub.models.Product
+import com.clementvexegon.sokohub.navigation.ROUTE_VIEW_PRODUCTS
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,11 +22,11 @@ import java.io.InputStream
 
 class ProductViewModel : ViewModel() {
 
-    private val cloudinaryUrl = "https://api.cloudinary.com/v1_1/ds8y1vfji/image/upload"
-    private val uploadPreset = "megamart"
+    private val cloudinaryUrl = "https://api.cloudinary.com/v1_1/dy3dql0bz/image/upload"
+    private val uploadPreset = "Sokohub"
 
-    private val Product = mutableStateListOf<Product>()
-    val products: List<Product> = Product
+    private val _products = mutableStateListOf<Product>()
+    val products: List<Product> = _products
 
     fun uploadProduct(
         imageUri: Uri?,
@@ -90,12 +87,12 @@ class ProductViewModel : ViewModel() {
     fun fetchProducts(context: Context) {
         val ref = FirebaseDatabase.getInstance().getReference("Products")
         ref.get().addOnSuccessListener { snapshot ->
-            Product.clear()
+            _products.clear()
             for (child in snapshot.children) {
                 val product = child.getValue(Product::class.java)
                 product?.let {
                     it.id = child.key
-                    Product.add(it)
+                    _products.add(it)
                 }
             }
         }.addOnFailureListener {
@@ -106,7 +103,7 @@ class ProductViewModel : ViewModel() {
     fun deleteProduct(productId: String, context: Context) {
         val ref = FirebaseDatabase.getInstance().getReference("Products").child(productId)
         ref.removeValue().addOnSuccessListener {
-            Product.removeAll { it.id == productId }
+            _products.removeAll { it.id == productId }
         }.addOnFailureListener {
             Toast.makeText(context, "Product not deleted", Toast.LENGTH_LONG).show()
         }

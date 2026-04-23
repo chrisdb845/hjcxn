@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import com.clementvexegon.sokohub.navigation.ROUT_HOME
 import com.clementvexegon.sokohub.models.User
+import com.clementvexegon.sokohub.navigation.ROUTE_ADD_PRODUCT
 import com.clementvexegon.sokohub.navigation.ROUT_HOME
 import com.clementvexegon.sokohub.navigation.ROUT_LOGIN
 import com.clementvexegon.sokohub.navigation.ROUT_ONBOARDING
@@ -15,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 class AuthViewModel(var navController: NavController, var context: Context){
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     fun signup(username:String, email:String, password:String, confirmpassword:String){
 
@@ -84,7 +85,7 @@ class AuthViewModel(var navController: NavController, var context: Context){
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
                         if (role == "admin") {
-                            navController.navigate(ROUT_ONBOARDING)   // <-- change to your actual route
+                            navController.navigate(ROUTE_ADD_PRODUCT)   // <-- change to your actual route
                         }
 
 

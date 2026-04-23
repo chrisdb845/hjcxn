@@ -158,7 +158,7 @@ fun RegisterScreen(navcontroller: NavController){
         Spacer(modifier = Modifier.height(20.dp))
 
         val context = LocalContext.current
-        val authViewModel = AuthViewModel(navcontroller, context)
+        val authViewModel = remember { AuthViewModel(navcontroller, context) }
         Button(
             onClick = {
 
